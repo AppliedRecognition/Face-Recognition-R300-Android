@@ -101,7 +101,7 @@ std::vector<Point> pointVectorFromObject(JNIEnv *env, jobjectArray points) {
 extern "C"
 JNIEXPORT jobject JNICALL
 Java_com_appliedrec_facerecognition_r300_core_FaceAlignment_alignFace(
-        JNIEnv *env, jobject thiz, jobject image, jobjectArray landmarks) {
+        JNIEnv *env, jobject thiz, jobject image, jobjectArray landmarks, jdouble scale, jdouble verticalOffset) {
     int landmarkCount = env->GetArrayLength(landmarks);
     if (landmarkCount < 4 || landmarkCount > 5) {
         throw std::runtime_error("Invalid number of face landmarks");
@@ -114,7 +114,7 @@ Java_com_appliedrec_facerecognition_r300_core_FaceAlignment_alignFace(
         jobject pt = env->GetObjectArrayElement(landmarks, i);
         points[i] = Point{env->GetFloatField(pt, xFieldId), env->GetFloatField(pt, yFieldId)};
     }
-    RotatedBox rotatedBox = alignFace(points);
+    RotatedBox rotatedBox = alignFace(points, scale, verticalOffset);
     std::vector<float> inputTensor = cropAlignToTensor(env, image, rotatedBox);
 
     int size = 112;
