@@ -9,12 +9,11 @@
 #include "RotatedBox.h"
 #include <vector>
 
-RotatedBox alignFace(const std::vector<Point>& pts, double scale = 2.85) {
+RotatedBox alignFace(const std::vector<Point>& pts, double scale = 2.85, double verticalOffset = 0.4) {
     LinearRegression reg;
-    const double yofs = 0.35;
-    const double y0 = yofs - 0.5;
-    const double y1 = yofs + 0.04;
-    const double y2 = yofs + 0.5;
+    const double y0 = verticalOffset - 0.5;
+    const double y1 = verticalOffset + 0.04;
+    const double y2 = verticalOffset + 0.5;
 
     reg.add(pts[0].x, -0.46, -y0, 1.0, 0.0);
     reg.add(pts[0].y,  y0, -0.46, 0.0, 1.0);
