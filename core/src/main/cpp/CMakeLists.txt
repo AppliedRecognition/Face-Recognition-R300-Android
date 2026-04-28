@@ -27,6 +27,8 @@ find_library(android-lib android)
 find_library(jnigraphics-lib jnigraphics)
 
 # Link libraries to your native code
+target_link_options(${CMAKE_PROJECT_NAME} PRIVATE "-Wl,-z,max-page-size=16384")
+
 target_link_libraries(
         ${CMAKE_PROJECT_NAME}
         ${log-lib}
